@@ -23,7 +23,7 @@ class ProductListViewModel: ObservableObject {
         guard !isLoading else { return }
         isLoading = true
         
-        NetworkManager.shared.fetchProducts(page: currentPage, limit: limit)
+        NetworkManager.shared.fetchData(route: .products, responseType: ProductResponse.self)
             .sink { [weak self] completion in
                 switch completion {
                 case .failure(let error):
@@ -32,8 +32,8 @@ class ProductListViewModel: ObservableObject {
                 case .finished:
                     break
                 }
-            } receiveValue: { [weak self] products in
-                self?.products.append(contentsOf: products)
+            } receiveValue: { [weak self] response in
+                self?.products.append(contentsOf: response.products)
                 self?.currentPage += 1
                 self?.isLoading = false
             }

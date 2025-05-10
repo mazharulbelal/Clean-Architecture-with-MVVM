@@ -15,6 +15,7 @@ struct ProductListView: View {
             List {
                 ForEach(viewModel.products) { product in
                     ProductCardView(product: product)
+                        .padding(.bottom, 10)
                 }
                 
                 if viewModel.isLoading {
@@ -22,8 +23,8 @@ struct ProductListView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
-                if let error = viewModel.error {
-                    Text("Error: \(error)")
+                if let errorMessage = viewModel.errorMessage {
+                    Text("Error: \(errorMessage)")
                         .foregroundColor(.red)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
@@ -38,3 +39,9 @@ struct ProductListView: View {
         }
     }
 }
+
+
+#Preview {
+    ProductListView()
+}
+
